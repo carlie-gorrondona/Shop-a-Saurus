@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap');
+
+.brandname {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 30pt;
+}
+
+.navbar {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16pt;
+}
+
+.shoppingcart > img {
+    height: 30px;
+    width: 30px;
+    margin-right: 30px;
+}
+
+.loginlink {
+    margin-left: 680px;
+    margin-right: 20px;
+}

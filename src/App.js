@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import Navigation from './components/Navbar';
+import Welcome from './components/Welcome';
+import About from './components/About';
+import Contact from './components/Contact';
+import DinoShop from './components/DinoShop';
+import { Route, Routes } from 'react-router-dom';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='home'>
+      <Routes>
+        <Route path='/' element={<Navigation />}>
+          <Route index element={<Welcome />}/>
+          <Route path='about' element={<About />}/>
+          <Route path='contact' element={<Contact />}/>
+          <Route path='shop' element={<DinoShop />}/>
+        </Route>
+      </Routes>
+      
+      <a className="icons8" target="_blank" href="https://icons8.com/icon/lweWyGBSK7KO/shopping-bag">Shopping Bag icon by Icons8</a>
     </div>
   );
 }

@@ -1,0 +1,31 @@
+.welcomepanel {
+    margin-top: 150px;
+    margin-bottom: 150px;
+    text-align: center;
+    color: white;
+    /* font-family: 'Rajdhani', sans-serif;; */
+}
+
+.backgroundoverlay {
+    background-color: rgba(37, 37, 37, 0.705);
+    width: 750px;
+    height: 250px;
+    margin: auto;
+    border-radius: 25px;
+}
+
+.foregroundtext {
+    padding: 40px;
+}
+
+.button {
+    margin-top: 20px;
+    background-color: green;
+    border-color: green;
+    font-size: 15pt;
+}
+
+.button:hover {
+    background-color:darkgreen;
+    border-color: darkgreen;
+}
