@@ -4,6 +4,13 @@
     margin-top: 70px;
 }
 
+
+
+.contactdesc {
+    font-size:15pt;
+    margin-bottom: 20px;
+}
+
 .form {
     display: flex;
     flex-direction: column;
@@ -22,13 +29,37 @@
 
 .backgroundoverlaycontact {
     background-color: rgba(37, 37, 37, 0.705);
-    width: 750px;
-    height: 500px;
+    width: 800px;
+    height: 650px;
     margin: auto;
     border-radius: 25px;
     padding: 30px;
 }
 
-p {
+.mb-3 {
+    text-align: left;
+    
+}
+
+.formsubmit {
+    background-color: green;
+    border-color: green;
+    margin-top: 20px;
     font-size: 15pt;
+    width: 100px;
+}
+
+.formsubmit:hover {
+    background-color:darkgreen;
+    border-color: darkgreen;
+}
+
+.dinoheadicon {
+    height: 30px;
+    width: 30px;
+    margin-right: 5px;
+}
+
+.icons8anchortag {
+    font-size: 2pt;
 }

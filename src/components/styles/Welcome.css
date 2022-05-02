@@ -8,8 +8,8 @@
 
 .backgroundoverlay {
     background-color: rgba(37, 37, 37, 0.705);
-    width: 750px;
-    height: 250px;
+    max-width: 750px;
+    max-height: 250px;
     margin: auto;
     border-radius: 25px;
 }

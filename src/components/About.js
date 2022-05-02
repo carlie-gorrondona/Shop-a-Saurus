@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import Navigation from './Navbar';
-import './About.css';
+import './styles/About.css';
 
 export default class About extends Component {
     render() {
