@@ -1,0 +1,24 @@
+.checkoutbackgroundoverlay {
+    background-color: rgba(37, 37, 37, 0.705);
+    width: 1300px;
+    height: 1000px;
+    margin: auto;
+    border-radius: 25px;
+    padding: 30px;
+}
+
+.checkoutwrapper {
+    text-align: center;
+    color: white;
+    margin-top: 70px;
+}
+
+.carttable {
+    width: 500px;
+    margin-right: 30px;
+    margin-left: 750px;
+}
+
+.checkoutform {
+    width: 600px;
+}

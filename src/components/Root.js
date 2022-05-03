@@ -5,6 +5,7 @@ import About from './About';
 import Contact from './Contact';
 import DinoShop from './DinoShop';
 import DinoInfoPage from './DinoInfoPage';
+import Checkout from './Checkout';
 import { Route, Routes} from 'react-router-dom';
 
 const Root = () => {
@@ -13,11 +14,12 @@ const Root = () => {
         <div>
             <Routes>
                 <Route path='/' element={<Navigation />}>
-                <Route index element={<Welcome />}/>
-                <Route path='about' element={<About />}/>
-                <Route path='contact' element={<Contact />}/>
-                <Route path='shop' element={<DinoShop />}/>
-                <Route path='dinoinfo' element={<DinoInfoPage />}/>
+                    <Route index element={<Welcome />}/>
+                    <Route path='about' element={<About />}/>
+                    <Route path='contact' element={<Contact />}/>
+                    <Route path='shop' element={<DinoShop />}/>
+                    <Route path='dinoinfo' element={<DinoInfoPage />}/>
+                    <Route path='checkout' element={<Checkout />}/>
                 </Route>
             </Routes>
             

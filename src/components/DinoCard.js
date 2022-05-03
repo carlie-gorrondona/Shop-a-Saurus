@@ -20,8 +20,8 @@ export default class DinoCard extends Component {
         return (
             <div>
                 <Col>
-                    <Card>
-                        <Card.Img src={this.props.dinosaur.dino_image} onClick={() => this.setState({show: true})}/>
+                    <Card style={{height: '23rem'}}>
+                        <Card.Img src={this.props.dinosaur.dino_image} style={{height: '15rem'}} onClick={() => this.setState({show: true})}/>
                         <Card.Body>
                             <Card.Title>{this.props.dinosaur.dino_name}</Card.Title>
                             <Card.Text>

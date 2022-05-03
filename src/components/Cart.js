@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Modal, Table} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 export default class Cart extends Component {
     constructor(props) {
@@ -48,7 +49,7 @@ export default class Cart extends Component {
                             <Button variant="secondary" onClick={() => this.props.close()}>
                                 Close
                             </Button>
-                            <Button variant="success">Go to Checkout</Button>
+                            <Button variant="success" to='/checkout' as={Link} onClick={() => this.props.close()}>Go to Checkout</Button>
                         </Modal.Footer>
                     </Modal>
                 </>

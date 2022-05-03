@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/DinoShop.css';
-import { Row} from 'react-bootstrap';
+import {Button, Row} from 'react-bootstrap';
 import DinoCard from './DinoCard';
 import DinosaurService from '../services/DinosaurService';
 
@@ -72,11 +72,16 @@ export default class DinoShop extends Component {
         return (
             <div className="wrapper">
                 <div className='shopbackgroundoverlay'>
+                    <h3>Our Dinosaurs</h3>
+                    <br></br>
                     <Row xs={1} md={3} className="g-4">
                         {(this.state.dinosaurs || []).map(dinosaur => (
                             <DinoCard key={dinosaur.dino_id} dinosaur={dinosaur} addToCart={this.addToCart}/>
                         ))}
                     </Row>
+                    <br></br>
+                    <br></br>
+                    <Button variant='success'>Spare No Expense</Button>
                 </div>
             </div>
         );
