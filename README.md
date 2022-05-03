@@ -6,7 +6,6 @@ This is a fun site where users can purchase dinosaurs (let's all pretend the sci
 
 - [ ] Users can browse all dinosaurs on the site
 - [ ] Users can login/logout
-- [ ] Users can search/filter for specific dinosaurs and/or traits
 - [ ] Users can add/remove items from their shopping cart
 - [ ] Users can make a purchase
 
