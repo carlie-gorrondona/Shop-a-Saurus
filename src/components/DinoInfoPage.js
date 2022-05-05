@@ -35,7 +35,7 @@ export default class DinoInfoPage extends Component {
         const minusState = this.state.quantity - 1;
         if (this.state.quantity > 1) {
                 this.setState({quantity: minusState });
-            if (this.state.quantity == 1 + 1) {
+            if (this.state.quantity === 1 + 1) {
                 this.setState({disableDec: true});
             }
         } else {
@@ -87,8 +87,8 @@ export default class DinoInfoPage extends Component {
                                     &#xff0b;
                             </Button>
                         </InputGroup>
-                        <Button variant="success" onClick={() => this.props.addToCart(this.props.dinosaur, this.state.quantity)}>
-                            Add to Cart
+                        <Button disabled={(this.props.dinosaur.dino_quantity === 0)} variant="success" onClick={() => this.props.addToCart(this.props.dinosaur, this.state.quantity)}>
+                            {(this.props.dinosaur.dino_quantity === 0) ? 'Sold Out' : 'Add to Cart'}
                         </Button>
                         <Button variant="secondary" onClick={() => this.props.close()}>
                             Close

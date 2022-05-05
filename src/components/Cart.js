@@ -10,7 +10,6 @@ export default class Cart extends Component {
         };
     }
     render() {
-        console.log("cart:", this.props.cart)
         return (
             <div>
                 <>
@@ -19,6 +18,7 @@ export default class Cart extends Component {
                         onHide={() => this.props.close()}
                         backdrop="static"
                         keyboard={false}
+                        size='lg'
                     >
                         <Modal.Header closeButton>
                         <Modal.Title>Your Cart</Modal.Title>
@@ -27,21 +27,21 @@ export default class Cart extends Component {
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
-                                    <th>#</th>
-                                    <th></th>
                                     <th>Product</th>
                                     <th>Quantity</th>
                                     <th>Price</th>
+                                    <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                    </tr>
+                                {(this.props.cart || []).map(cart => (
+                                        <tr key={cart.id}>
+                                            <td>{cart.name}</td>
+                                            <td>{cart.quantity}</td>
+                                            <td>${(cart.price * cart.quantity).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</td>
+                                            <td><Button variant='danger' onClick={() => this.props.removeCartItem(cart.id)}>Remove</Button></td>
+                                        </tr>
+                                ))}
                                 </tbody>
                             </Table>
                         </Modal.Body>

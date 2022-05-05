@@ -16,52 +16,81 @@ export default class DinoShop extends Component {
         this.addToCart = this.addToCart.bind(this)
     }
 
-    addToCart(dinosaur, quatity) {
+    addToCart(dinosaur, quantity) {
         console.log("Add To Cart")
-        console.log("dino-to-add",dinosaur);
 
         var cart_data = {
             id: dinosaur.dino_id,
             name: dinosaur.dino_name,
-            quatity: quatity,
+            quantity: quantity,
             price: dinosaur.dino_price,
         }
 
-        var temp = this.state.cart;
-        console.log("old car", temp);
+        // Fetch the old cart data
+        const old_cart = JSON.parse(localStorage.getItem('cart'));
+        console.log("cart", old_cart)
 
-        temp.push(cart_data)
-        this.setState({cart: temp});
 
-        console.log("new car",this.state.cart);
-        localStorage.setItem('cart', JSON.stringify(this.state.cart));
+        let index = old_cart.findIndex(old => old.id === cart_data.id);
+        
+        // if item does not exits in old_cart push new item into it
+        if (index === -1) {
+            old_cart.push(cart_data)
+            console.log("add new item", cart_data)
+
+        // else lets update the quantity
+        } else {
+
+            // if quantity is not equal to the max amount of dinos + new quantity is not greater than the max dino quantity 
+            // increase the quantity.
+            if ((old_cart[index]["quantity"] + quantity) <= dinosaur.dino_quantity) {
+                old_cart[index]["quantity"] += quantity
+
+                console.log("update new item", old_cart[index])
+            // else do some magic UI error letting user know max quantity has been reached
+            } else {
+                // Do something with the error
+            }
+        }
+
+        //Now that updates have been made lets create a new cart with the old cart date and load that into storage
+        var new_cart = [];
+        new_cart = old_cart
+        localStorage.setItem('cart', JSON.stringify(new_cart));
+
+        // now lets set the state
+        this.setState({cart: new_cart});
     }
-    
+
     componentDidMount() {
         console.log("Mount component")
-        const dinosaurs = JSON.parse(localStorage.getItem('dinosaurs'));
-        console.log(dinosaurs)
-        
-        if (dinosaurs === null) {
+
+        //Check local storage for dinosaur data
+        if (localStorage.getItem('dinosaurs') === null) {
+            console.log("No dinos")
             DinosaurService.getDinosaurs().then((res) => {
                 this.setState({dinosaurs: res.data});
+                localStorage.setItem('dinosaurs', JSON.stringify(res.data));
+            }).catch(error => {
+                console.error('There was an error!', error);
             });
-
-            localStorage.setItem('dinosaurs', JSON.stringify(this.state.dinosaurs));
         } else {
+            const dinosaurs = JSON.parse(localStorage.getItem('dinosaurs'));
+            console.log("DinoShop", dinosaurs)
             this.setState({
                 dinosaurs: dinosaurs, 
             });
         }
 
-
-        const cart = JSON.parse(localStorage.getItem('cart'));
-        console.log(cart)
-        if (cart === null) {
+        // Check local storage for cart data
+        if (localStorage.getItem('cart') === null) {
             this.setState({
                 cart: [], 
             });
         } else {
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            console.log(cart)
+
             this.setState({
                 cart: cart, 
             });

@@ -1,34 +1,73 @@
 import React, {Component} from 'react';
 import './styles/Checkout.css';
 import {Table, Form, Button, Container, Col, Row} from 'react-bootstrap';
+import PaymentSubmittedModal from './PaymentSubmittedModal';
+import DinosaurService from '../services/DinosaurService';
+import { Navigate } from "react-router-dom"
 
 export default class Checkout extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cart: []
+            cart: [],
+            showPaymentModal: false,
+            showSpinner: true,
+            redirectToShop: false,
         }
+        this.handlePaymentModalClose = this.handlePaymentModalClose.bind(this)
+        this.handleShowPaymentModal = this.handleShowPaymentModal.bind(this)
     }  
     componentDidMount() {
+        if (localStorage.getItem('cart') === null) {
+            this.setState({
+                cart: [], 
+                dinosaurs: []
+            });
+        } else {
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            console.log("Load Checkout cart date", cart)
 
+            this.setState({
+                cart: cart, 
+            });
+        }
+    }
+    handlePaymentModalClose() {
         this.setState({
-            cart: [{
-                id: 1,
-                name: 'Carcharodontosaurus',
-                quantity: 2,
-                price: 500000000
-            }, {
-                id: 2,
-                name: 'Parasaurolophus',
-                quantity: 1,
-                price: 2000000
-            }, {
-                id: 3,
-                name: 'Utahraptor',
-                quantity: 2,
-                price: 5000000
-            }]
-        })
+            showPaymentModal: false, 
+            showSpinner: true
+        });
+    }
+    handleShowPaymentModal() {
+        this.setState({showPaymentModal: true})
+
+        if (this.state.cart.length !== 0) {
+
+            // time to buy my dinos :D
+            DinosaurService.buyDinosaur(this.state.cart).then((res) => {
+                console.log(res.data)
+    
+                setTimeout(function(){ 
+                        this.setState({showSpinner: false})
+                }.bind(this), 5000);
+            }).catch(error => {
+                console.error('There was an error!', error);
+            });
+            
+            // Empty my cart for more babies
+            localStorage.setItem('cart', JSON.stringify([]));
+            this.setState({
+                cart: [], 
+            });
+
+            setTimeout(function(){ 
+                localStorage.removeItem('dinosaurs');
+                this.handlePaymentModalClose()
+                this.setState({
+                    redirectToShop: true
+                })
+            }.bind(this), 10000);
+        }
     }
     render() {
         let cartSum = 0;
@@ -162,7 +201,7 @@ export default class Checkout extends Component {
                                             <Row>
                                                 <Col>
                                                     <h6>Please confirm all information is correct before submitting payment.</h6>
-                                                    <Button variant='success'>
+                                                    <Button disabled={(this.state.cart.length === 0)}variant='success' onClick={() => this.handleShowPaymentModal()}>
                                                         Submit Payment
                                                     </Button>
                                                 </Col>
@@ -176,25 +215,22 @@ export default class Checkout extends Component {
                                 <Table striped bordered hover variant='success'>
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Product Name</th>
                                             <th>Quantity</th>
+                                            <th>Product Name</th>
                                             <th>Price</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {(this.state.cart || []).map(cart => (
-                                        <tr>
-                                            <td>{cart.id}</td>
-                                            <td>{cart.name}</td>
+                                        <tr key={cart.id}>
                                             <td>{cart.quantity}</td>
-                                            <td>${cart.price.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</td>
+                                            <td>{cart.name}</td>
+                                            <td>${(cart.price * cart.quantity).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</td>
                                         </tr>
                                         ))}
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td></td>
                                             <td></td>
                                             <th>Total:</th>
                                             <td>${cartSum.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</td>
@@ -204,6 +240,8 @@ export default class Checkout extends Component {
                             </Col>
                         </Row>
                     </Container>
+                    <PaymentSubmittedModal show={this.state.showPaymentModal} showSpinner={this.state.showSpinner} close={this.handlePaymentModalClose} />
+                    {this.state.redirectToShop && <Navigate to='/' replace={true} />}
                 </div>
             </div>
         );

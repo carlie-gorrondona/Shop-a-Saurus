@@ -3,8 +3,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/Welcome.css';
 import {Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import DinosaurService from '../services/DinosaurService';
 
 export default class Welcome extends Component {
+
+    componentDidMount() {
+        DinosaurService.getDinosaurs().then((res) => {
+            this.setState({dinosaurs: res.data});
+            localStorage.setItem('dinosaurs', JSON.stringify(res.data));
+        }).catch(error => {
+            console.error('There was an error!', error);
+        });
+    }
+
     render() {
         return (
             <div className="welcomepanel" id="welcome">

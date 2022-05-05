@@ -25,7 +25,12 @@ export default class DinoCard extends Component {
                         <Card.Body>
                             <Card.Title>{this.props.dinosaur.dino_name}</Card.Title>
                             <Card.Text>
-                                <Button className='addtocartbutton' onClick={() => this.props.addToCart(this.props.dinosaur, 1)}>Add to Cart</Button>
+                                <Button 
+                                    disabled={(this.props.dinosaur.dino_quantity === 0)}
+                                    className='addtocartbutton'
+                                    onClick={() => this.props.addToCart(this.props.dinosaur, 1)}>
+                                        {(this.props.dinosaur.dino_quantity === 0) ? 'Sold Out' : 'Add to Cart'}
+                                </Button>
                             </Card.Text>
                         </Card.Body>
                     </Card>

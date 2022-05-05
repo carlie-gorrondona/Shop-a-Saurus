@@ -10,10 +10,13 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     }
 });
 
+const dino_table = "dinosaurs";
+const user_table = "users";
+
 module.exports = {
     getDinosaurs: (req, res) => {
         sequelize.query(`
-        SELECT * FROM dinosaurs;
+        SELECT * FROM ${dino_table};
         `)
             .then(dbRes => res.status(200).send(dbRes[0]))
             .catch(err => console.log(err))
@@ -23,28 +26,50 @@ module.exports = {
         let {id} = req.params;
 
         sequelize.query(`
-        SELECT * FROM dinosaurs
+        SELECT * FROM ${dino_table}
         WHERE dino_id = ${id};
         `)
             .then(dbRes => res.status(200).send(dbRes[0])) 
             .catch(err => console.log(err))
     },
+    buyDinosaur: async (req, res) => {
+        console.log(req.body)
+        var cart = req.body
 
-    login: (req, res) => {
+        const statements = [];
+        for (let i = 0; i < cart.length; i++) {
+            statements.push(
+                sequelize.query(
+                  `UPDATE ${dino_table} 
+                  SET dino_quantity = dino_quantity - ${cart[i].quantity} 
+                  WHERE dino_id = ${cart[i].id};`
+                )
+            );
+        }
+
+        const result = await Promise.all(statements)
+        .then(
+            res.status(200).send("OK")
+        ).catch(err => {
+            console.log(err)
+        });
+
+        console.log(result)
+        
+    },
+
+    loginUser: (req, res) => {
+        var creds = req.body
+
+        console.log(creds.email)
+        console.log(creds.password)
         sequelize.query(`
-        SELECT user_id FROM users
-        WHERE user_username = ${username};
+            SELECT * FROM ${user_table}
+            WHERE user_email = '${creds.email}'
+            AND user_password = '${creds.password}';
         `)
-
-        // if (username === user_username && password === user_password) {
-        //     console.log('Logging in...')
-
-        // } else if (username === user_username && password !== user_password) {
-        //     console.log('Incorrect password');
-
-        // } else if (username!== user_username) {
-        //     console.log('Username and/or password incorrect.')
-        // }
+        .then(dbRes => res.status(200).send(dbRes[0])) 
+        .catch(err => console.log(err))
     },
 
     register: (req, res) => {
